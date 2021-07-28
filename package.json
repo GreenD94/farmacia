@@ -13,10 +13,12 @@
         "axios": "^0.21",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "postcss": "^8.1.14",
+        "vue-loader": "^16.3.3"
     },
     "dependencies": {
         "laravel-echo": "^1.11.0",
-        "pusher-js": "^7.0.3"
+        "pusher-js": "^7.0.3",
+        "vue": "^3.1.5"
     }
 }
