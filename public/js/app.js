@@ -17958,7 +17958,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    user: Object
+    user: Object,
+    routes: Object
   },
   data: function data() {
     return {
@@ -17970,21 +17971,21 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
+    var _this = this;
+
     console.log(this.user); // this.fetchMessages();
-    // Echo.join('chat')
-    //     .here(user => {
-    //         this.users = user;
-    //     })
-    //     .joining(user => {
-    //         this.users.push(user);
-    //     })
-    //     .leaving(user => {
-    //         this.users = this.users.filter(u => u.id != user.id);
-    //     })
-    //     .listen('MessageSent',(event) => {
-    //         this.messages.push(event.message);
-    //     })
-    // .listenForWhisper('typing', user => {
+
+    Echo.join('chat').here(function (user) {
+      _this.users = user;
+    }).joining(function (user) {
+      _this.users.push(user);
+    }).leaving(function (user) {
+      _this.users = _this.users.filter(function (u) {
+        return u.id != user.id;
+      });
+    }).listen('MessageSent', function (event) {
+      _this.messages.push(event.message);
+    }); // .listenForWhisper('typing', user => {
     //    this.activeUser = user;
     //     if(this.typingTimer) {
     //         clearTimeout(this.typingTimer);
@@ -18005,7 +18006,7 @@ __webpack_require__.r(__webpack_exports__);
         user: this.user,
         message: this.newMessage
       });
-      axios.post('messages', {
+      axios.post(this.routes.api_chat_store, {
         message: this.newMessage
       });
       this.newMessage = '';
@@ -18111,9 +18112,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.input = {};
     },
     redirect: function redirect(url) {
-      if (!url == null) {//window.location=url
-      } // window.location=this.routes.chat;
+      if (!url == null) {
+        window.location = url;
+      }
 
+      window.location = this.routes.chat;
     }
   }
 });

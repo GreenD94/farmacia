@@ -13,6 +13,7 @@ class LoginsController extends Controller
 
     function index(request $request)
     {
+        
         $routes =   [   
             'api_login'         =>  route('api.login.store'),
             'chat'         =>  route('chat'),
@@ -21,10 +22,9 @@ class LoginsController extends Controller
         return view('login.login')->with('routes',$routes);;
     }
 
-    function store(request $request){
-        //return $request->all();
-        $login=Auth::attempt($request->only(['email','password']));
-
+    function store(request $request)
+    {
+            $login=Auth::attempt($request->only(['email','password']));
             return $login;
     }
 }

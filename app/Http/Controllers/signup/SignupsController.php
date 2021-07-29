@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Validator;
 class SignupsController extends Controller
 {
 
-
     function index(request $request)
     {
         $routes =   [   

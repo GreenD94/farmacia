@@ -58,10 +58,10 @@ class UsersController extends Controller
     public function store(request $request)
     {
         if($request->ajax())
-        {
-
-            return User::create($request->all());
-
+        {         
+            $data=$request->all();
+            $data['password']=  Hash::make($request->password);
+            return User::create($data);
         }
     }
 

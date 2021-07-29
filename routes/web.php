@@ -36,7 +36,13 @@ Route::group(['middleware' => 'auth'], function ()
 {
     Route::get('/chat', function () {
         $user=User::find( Auth::id());
-        return view('chat.chat')->with('user', $user);
+        $routes =   [   
+            'api_chat_store'         =>  route('api.chat.store'),
+        ];
+        $routes=json_encode($routes);           
+        return view('chat.chat')->with('user', $user)->with('routes', $routes);
     })->name('chat');
-    Route::post('/api/chat',[ChatsController::class,'store'])->name('api.chat.store');
+
+
+  //  Route::post('/api/chat',[ChatsController::class,'store'])->name('api.chat.store');
 });

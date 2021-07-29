@@ -7,7 +7,7 @@
                <div class="card-body p-0">
                    <ul class="list-unstyled" style="height:300px; overflow-y:scroll" >
                        <li class="p-2" v-for="(message, index) in messages" :key="index" >
-                           <strong>{{ message.user.name }}</strong>
+                           <strong>{{message.user.name }}</strong>
                            {{ message.message }}
                        </li>
                    </ul>
@@ -44,7 +44,8 @@
     export default {
         props: 
         {
-            user:Object
+            user:Object,
+            routes:Object
         },
         data() {
             return {
@@ -58,19 +59,19 @@
         created() {
             console.log(this.user);
            // this.fetchMessages();
-            // Echo.join('chat')
-            //     .here(user => {
-            //         this.users = user;
-            //     })
-            //     .joining(user => {
-            //         this.users.push(user);
-            //     })
-            //     .leaving(user => {
-            //         this.users = this.users.filter(u => u.id != user.id);
-            //     })
-            //     .listen('MessageSent',(event) => {
-            //         this.messages.push(event.message);
-            //     })
+            Echo.join('chat')
+                .here(user => {
+                    this.users = user;
+                })
+                .joining(user => {
+                    this.users.push(user);
+                })
+                .leaving(user => {
+                    this.users = this.users.filter(u => u.id != user.id);
+                })
+                .listen('MessageSent',(event) => {
+                    this.messages.push(event.message);
+                })
                 // .listenForWhisper('typing', user => {
                 //    this.activeUser = user;
                 //     if(this.typingTimer) {
@@ -92,7 +93,7 @@
                     user: this.user,
                     message: this.newMessage
                 });
-                axios.post('messages', {message: this.newMessage});
+                axios.post(this.routes.api_chat_store, {message: this.newMessage});
                 this.newMessage = '';
             },
             // sendTypingEvent() {

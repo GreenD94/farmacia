@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Events\MessageSent;
 use App\Models\Message;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ChatsController extends Controller
 {
@@ -19,11 +20,14 @@ class ChatsController extends Controller
 
     public function store(Request $request)
     {
+        $authUser=User::find( Auth::id());
         // $message = User::find( auth()->user()->id)->messages()->create([
         //     'message' => $request->message
-        // ]);
-
-        //broadcast(new MessageSent($message->load('user')))->toOthers();
+        // ]);  
+        $message=new Message(); 
+        $message->message= $request->message;
+        $message->user=$authUser; 
+        broadcast(new MessageSent($message->toArray()))->toOthers();
 
         return ['status' => 'success'];
     }

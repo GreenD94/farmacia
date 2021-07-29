@@ -143,9 +143,9 @@ export default {
         },
         redirect:function(url){
             if(!url==null){
-                //window.location=url
+                window.location=url
             }
-           // window.location=this.routes.chat;
+            window.location=this.routes.chat;
         },
 	},
 }

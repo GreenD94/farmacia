@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\chat\ChatsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 // aqui
+
+    
+Route::post('/chat',[ChatsController::class,'store'])->name('api.chat.store');

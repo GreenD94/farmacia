@@ -4,5 +4,5 @@ chat
 @endsection
 @section('page')
 
-        <chat-component :user="{{$user}}" ></chat-component >
+        <chat-component :user="{{$user}}" :routes="{{$routes}}" ></chat-component >
 @endsection
