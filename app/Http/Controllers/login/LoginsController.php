@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\login;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\login\StoreRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -22,9 +24,15 @@ class LoginsController extends Controller
         return view('login.login')->with('routes',$routes);;
     }
 
-    function store(request $request)
+    function store(StoreRequest $request)
     {
-            $login=Auth::attempt($request->only(['email','password']));
-            return $login;
+            $isloginSuccess=Auth::attempt($request->only(['email','password']));
+            if (!$isloginSuccess) {return response()->json(['password'=>'wrong password'], 401);}
+            $user = User::where('email', $request->email)->first();
+            $token= $user->createToken('auth_token')->plainTextToken;
+            return response()->json([
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+            ]);
     }
 }
