@@ -6,7 +6,7 @@
         <div class=" form-group-sm row gutters-tiny" >
             <span class="col-12 m-0" >{{'register.name'}}:<span class="text-danger">*</span></span>
             <div class="col-12 ">
-                <input class="form-control form-control-lg bold hover-border" type="text"   :placeholder="'register.placeholder.name'"  autocomplete="off" v-model="input.name" :class="{'is-invalid':error.name,'is-valid':input.name}">
+                <input class="form-control form-control-lg bold hover-border" type="text"   :placeholder="'register.placeholder.name'"  autocomplete="off" v-model="input.first_name" :class="{'is-invalid':error.name,'is-valid':input.name}">
                 <span class="text-danger">{{error.name}}</span>
             </div>
         </div>

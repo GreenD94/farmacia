@@ -26,23 +26,24 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', [LoginsController::class,'index'])->name('login');
-    Route::post('/login', [LoginsController::class,'store'])->name('api.login.store');
     Route::get('/signup', [SignupsController::class,'index'])->name('signup');
-    Route::post('/users', [UsersController::class,'store'])->name('api.users.store');
 });
 
 
-Route::group(['middleware' => 'auth'], function () 
+
+
+
+///refactoriza esto menol !!!!
+Route::group(['middleware' => 'auth:sanctum'], function () 
 {
-    Route::get('/chat', function () {
-        $user=User::find( Auth::id());
-        $routes =   [   
-            'api_chat_store'         =>  route('api.chat.store'),
-        ];
-        $routes=json_encode($routes);           
-        return view('chat.chat')->with('user', $user)->with('routes', $routes);
-    })->name('chat');
 
 
-  //  Route::post('/api/chat',[ChatsController::class,'store'])->name('api.chat.store');
 });
+Route::get('/chat', function () {
+    $user=User::find( Auth::id());
+    $routes =   [   
+        'api_chat_store'         =>  route('api.chat.store'),
+    ];
+    $routes=json_encode($routes);           
+    return view('chat.chat')->with('user', $user)->with('routes', $routes);
+})->name('chat');

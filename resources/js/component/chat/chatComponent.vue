@@ -7,7 +7,7 @@
                <div class="card-body p-0">
                    <ul class="list-unstyled" style="height:300px; overflow-y:scroll" >
                        <li class="p-2" v-for="(message, index) in messages" :key="index" >
-                           <strong>{{message.user.name }}</strong>
+                           <strong>{{message.user.first_name }}</strong>
                            {{ message.message }}
                        </li>
                    </ul>
@@ -21,7 +21,7 @@
                     placeholder="Enter your message..."
                     class="form-control">
            </div>
-            <span class="text-muted" v-if="activeUser" >{{ activeUser.name }} is typing...</span>
+            <span class="text-muted" v-if="activeUser" >{{ activeUser.first_name }} is typing...</span>
        </div>
 
         <div class="col-4">
@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <ul>
                         <li class="py-2" v-for="(user, index) in users" :key="index">
-                            {{ user.name }}
+                            {{ user.first_name }}
                         </li>
                     </ul>
                 </div>
@@ -62,6 +62,7 @@
             Echo.join('chat')
                 .here(user => {
                     this.users = user;
+                    console.log(user)
                 })
                 .joining(user => {
                     this.users.push(user);

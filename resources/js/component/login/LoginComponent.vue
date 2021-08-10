@@ -129,6 +129,7 @@ export default {
                     console.log('logged');
                     this.clearVariables();
                     this.redirect(this.routes.redirect);
+
                 })
                 .catch(error => {
                     const errorBag=error.response.data.data;

@@ -15,9 +15,12 @@ class CreateBranchOfficesTable extends Migration
     {
         Schema::create('branch_offices', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->unsignedBigInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->string('name');
+            $table->string('dni');            
+            $table->string('phone');
+            $table->string('email');
             $table->timestamps();
         });
     }

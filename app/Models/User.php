@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Query;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,6 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    use Query;
     use HasFactory, Notifiable,HasApiTokens;
 
     /**
@@ -19,9 +21,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
+        'phone'
     ];
 
     /**
@@ -47,4 +51,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class);
     }
+
+    public function OfficeSubscriptions()
+    {
+        return $this->hasMany(OfficeSubscription::class,'user_id', 'id');
+    }
+    public function offices()
+    {
+        return $this->belongsToMany(BranchOffice::class,'OfficeSubscription', 'user_id', 'branch_office_id');
+    }
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'addressable');
+    }
+
+    
 }
