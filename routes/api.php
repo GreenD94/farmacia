@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\chat\ChatsController;
+use App\Http\Controllers\login\AppLoginsController;
 use App\Http\Controllers\login\LoginsController;
 use App\Http\Controllers\user\UsersController;
 use Illuminate\Http\Request;
@@ -34,6 +35,8 @@ Route::group(['middleware' => 'auth:sanctum'], function ()
 
 
 // aqui
+Route::post('/app-login', [AppLoginsController::class,'store'])->name('api.app_login.store');    
 Route::post('/login', [LoginsController::class,'store'])->name('api.login.store');    
 Route::post('/chat',[ChatsController::class,'store'])->name('api.chat.store');
 Route::post('/user', [UsersController::class,'store'])->name('api.users.store');
+

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\login;
+namespace App\Http\Requests\user;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -27,7 +27,10 @@ class StoreRequest extends FormRequest
     {
         return [
             'password'              =>  'required|min:8',
-            'email'                 =>  'required|email|exists:users,email',
+            'email'                 =>  'required|email|unique:users,email',
+            'first_name'                 =>  'required',
+            'last_name'                 =>  'required',
+            'phone'                 =>  'required',
         ];
     }
     

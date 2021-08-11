@@ -25,7 +25,9 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
-        'phone'
+        'phone',
+        'photo_default',
+        'birth_date'
     ];
 
     /**
@@ -63,6 +65,10 @@ class User extends Authenticatable
     public function address()
     {
         return $this->morphOne(Address::class, 'addressable');
+    }
+    public function SocialMediaSubscription()
+    {
+        return $this->morphMany(SocialMediaSubscription::class, 'subscribable');
     }
 
     

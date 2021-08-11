@@ -19,6 +19,8 @@ class CreateAddressesTable extends Migration
             $table->integer('addressable_id');
             $table->string('adress')->nullable();
             $table->string('city')->nullable();
+            $table->unsignedBigInteger('state_id');
+            $table->foreign('state_id')->references('id')->on('states');
             $table->decimal('latitude')->nullable();
             $table->decimal('longitude')->nullable();
             $table->string('background_color')->nullable();

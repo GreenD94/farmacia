@@ -13,26 +13,17 @@ class LoginsController extends Controller
 {
 
 
-    function index(request $request)
-    {
-        
-        $routes =   [   
-            'api_login'         =>  route('api.login.store'),
-            'chat'         =>  route('chat'),
-        ];
-        $routes=json_encode($routes);           
-        return view('login.login')->with('routes',$routes);;
-    }
-
     function store(StoreRequest $request)
     {
+        if(!$request->ajax()){return response()->json('only ajax is accepted', 403);}
             $isloginSuccess=Auth::attempt($request->only(['email','password']));
             if (!$isloginSuccess) {return response()->json(['password'=>'wrong password'], 401);}
             $user = User::where('email', $request->email)->first();
-            $token= $user->createToken('auth_token')->plainTextToken;
-            return response()->json([
+            $token= $user->createToken('auth_token')->plainTextToken;            
+            $result=array_merge($user->toArray(),[
                 'access_token' => $token,
                 'token_type' => 'Bearer',
             ]);
+            return response()->json($result, 202);
     }
 }
