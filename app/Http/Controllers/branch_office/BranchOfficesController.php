@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\user;
+namespace App\Http\Controllers\branch_office;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\branch_office\StoreRequest;
+use App\Http\Requests\branch_office\UpdateRequest;
 use App\Http\Requests\GRequest;
 use App\Models\BranchOffice;
 use App\Traits\Responser;
-use Illuminate\Support\Facades\Hash;
 
 class BranchOfficesController extends Controller
 {
@@ -36,7 +37,7 @@ class BranchOfficesController extends Controller
         
     }
 
-    function update(GRequest $request)
+    function update(UpdateRequest $request)
     {
 
             $model    =   BranchOffice::whereId( $request->id);
@@ -47,7 +48,7 @@ class BranchOfficesController extends Controller
         
     }
 
-    function destroy(GRequest $request)
+    function destroy(UpdateRequest $request)
     {
 
             $model =BranchOffice::find($request->id);
@@ -57,7 +58,7 @@ class BranchOfficesController extends Controller
     }
 
 
-    public function store(GRequest $request)
+    public function store(StoreRequest $request)
     {
                   
             $data=$request->all();

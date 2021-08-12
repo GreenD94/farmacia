@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\companies;
 
 use App\Traits\Responser;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class GRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     use Responser;
     /**
@@ -28,7 +28,9 @@ class GRequest extends FormRequest
      */
     public function rules()
     {
-        return [];
+        return [
+            'name'                 =>  'required',
+        ];
     }
     
     protected  function failedValidation(Validator $validator)

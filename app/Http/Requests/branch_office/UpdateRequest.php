@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\branch_office;
 
 use App\Traits\Responser;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class GRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     use Responser;
     /**
@@ -28,7 +28,12 @@ class GRequest extends FormRequest
      */
     public function rules()
     {
-        return [];
+        return [
+            'id'              =>  'required|numeric|gte:1|exists:branch_offices,id',
+            'company_id'              =>  'numeric|gte:1|exists:companies,id',
+            'email'                 =>  'email|unique:users,email',
+            'active'                 =>  'boolean',
+        ];
     }
     
     protected  function failedValidation(Validator $validator)

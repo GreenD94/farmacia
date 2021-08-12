@@ -8,10 +8,10 @@ use App\Http\Requests\user\StoreRequest;
 use App\Http\Requests\user\UpdateRequest;
 use App\Models\User;
 use App\Traits\Responser;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
+
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+
 
 class UsersController extends Controller
 {
