@@ -23,12 +23,6 @@ class CreateAddressesTable extends Migration
             $table->foreign('state_id')->references('id')->on('states');
             $table->decimal('latitude')->nullable();
             $table->decimal('longitude')->nullable();
-            $table->string('background_color')->nullable();
-            $table->string('main_color')->nullable();
-            $table->string('secondary_color')->nullable();
-            $table->string('text_one_color')->nullable();
-            $table->string('text_two_color')->nullable();
-            $table->string('logo_white')->nullable();
             $table->boolean('active')->default(true);           
             
             $table->timestamps();

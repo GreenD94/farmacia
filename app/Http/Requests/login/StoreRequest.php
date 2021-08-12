@@ -2,12 +2,14 @@
 
 namespace App\Http\Requests\login;
 
+use App\Traits\Responser;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreRequest extends FormRequest
 {
+    use Responser;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -15,6 +17,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize()
     {
+        //if(!$this->ajax()){$this->errorResponse(null,'only ajax is accepted',403);}
         return true;
     }
 
@@ -33,6 +36,7 @@ class StoreRequest extends FormRequest
     
     protected  function failedValidation(Validator $validator)
     {
-       throw new HttpResponseException(response()->json($validator->errors(), 400));
+        $this->errorResponse($validator->errors());
+
     }
 }

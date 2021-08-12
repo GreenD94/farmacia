@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\BranchOffice;
+use App\Models\Companies;
 use App\Models\Tag;
 use App\Models\User;
 use Carbon\Carbon;
@@ -41,6 +43,42 @@ class UserSeeder extends Seeder
             ]
         );
 
+
+        Companies::create(
+            [
+            'name'=>'Magic',
+            ]
+        );
+
+        $office=BranchOffice::create(
+            [
+            'company_id'=>1,
+            'name'=>'Barinison',
+            'dni'=>3323233,
+            'phone'=>+5288999,
+            'email'=>'Rafita@rafita.com',
+            'background_color'=>'black',
+            'main_color'=>'white',
+            'secondary_color'=>'blue',
+            'text_one_color'=>'yellow',
+            'text_two_color'=>'purple',
+            'logo_white'=>'https://img-9gag-fun.9cache.com/photo/aqjMx4Q_460swp.webp',
+            'active'=>true,
+            ]
+        );
+
+        $office->address()->create
+        (
+            [
+            'state_id'=>3,
+            'adress'=>'street Sesame',
+            'city'=>'orlun',
+            'latitude'=>002444,
+            'longitude'=>000.9333,
+            'active'=>true,
+            ]
+        );
+
         $user=User::create(
             [
                 'first_name'=>'pedro',
@@ -52,6 +90,8 @@ class UserSeeder extends Seeder
                 'birth_date'=>Carbon::now()
             ]
         );
+
+        $user->assignRole('developer');
 
         $user->SocialMediaSubscription()->createMany(
             [
@@ -69,13 +109,15 @@ class UserSeeder extends Seeder
             'city'=>'felicity city',
             'latitude'=>002,
             'longitude'=>000.3333,
-            'background_color'=>'black',
-            'main_color'=>'white',
-            'secondary_color'=>'blue',
-            'text_one_color'=>'yellow',
-            'text_two_color'=>'purple',
-            'logo_white'=>'https://img-9gag-fun.9cache.com/photo/aqjMx4Q_460swp.webp',
             'active'=>true,
+            ]
+        );
+
+        $user->OfficeSubscriptions()->create
+        (
+            ['branch_office_id'=>1,
+            'user_id'=>1,
+            'active'=>1,
             ]
         );
     }

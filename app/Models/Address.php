@@ -12,7 +12,8 @@ class Address extends Model
      * @var array
      */
     protected $table = 'addresses';
-    protected $fillable = ['state_id','addressable_type','addressable_id','adress','city','latitude','longitude','background_color','main_color','secondary_color','text_one_color','text_two_color','logo_white','active'];
+    protected $fillable = ['state_id','addressable_type','addressable_id','adress','city','latitude','longitude','active'];
+    
     public function addressable()
     {
         return $this->morphTo();

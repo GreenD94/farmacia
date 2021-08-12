@@ -21,6 +21,13 @@ class CreateBranchOfficesTable extends Migration
             $table->string('dni');            
             $table->string('phone');
             $table->string('email');
+            $table->string('background_color')->nullable();
+            $table->string('main_color')->nullable();
+            $table->string('secondary_color')->nullable();
+            $table->string('text_one_color')->nullable();
+            $table->string('text_two_color')->nullable();
+            $table->string('logo_white')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

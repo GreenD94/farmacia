@@ -2,122 +2,113 @@
 namespace App\Traits;
 
 use Carbon\Carbon;
-
+use Illuminate\Database\Eloquent\Builder;
 trait Query{
     public function scopeSearchBy($query,$column,$data,$type=null)
     {
         $isBoolean=is_bool($data);
         $isValidData= $isBoolean?true: (!!$data);
         if($isValidData){
-            if($type=='like'){
-                return  $query->where($column,'like', $data);
+            if($type=='whereDate'){
+                return  $query->whereDate($column, $type ,$data);
             }
-            if($type=='whereIn'){
-                return  $query->whereIn($column,$data);
+            if($type=='whereMonth'){
+                return  $query->whereMonth($column, $type ,$data);
+            }
+            if($type=='whereDay'){
+                return  $query->whereDay($column, $type ,$data);
+            }
+            if($type=='whereYear'){
+                return  $query->whereYear($column, $type ,$data);
+            }
+            if($type=='whereTime'){
+                return  $query->whereTime($column, $type ,$data);
+            }
+            if($type=='whereNull'){
+                return  $query->whereNull($column);
+            }
+            if($type=='whereNotNull '){
+                return  $query->whereNotNull($column);
+            }
+            if($type=='whereBetween'){
+                return  $query->whereBetween($column, $data);
+            }
+            if($type=='whereNotBetween'){ 
+                return  $query->whereNotBetween($column, $data);
+            }
+            if($type=='whereNotIn'){
+                return  $query->whereNotIn($column, $data);
+            }
+            if($type=='whereColumn'){
+                return  $query->whereNotIn($column, $data);
             }
             if($type==null){
                 return  $query->where($column,$data);
             }
-           return  $query->where($column,$type,$data);
+            return  $query->where($column,$type,$data);
         }
         return $query;
     }
 
-    public function scopeSearchByRelationship($query,$relationships=null,$column=null,$data=null,$type=null)
+
+    public function scopeSearchByRelationship($query,$relationships=null,$column=null,$data=null,$type='=')
     {
-
-        if (is_array($relationships)){
-            $relationship1  =   isset($relationships[0]) ? $relationships[0] : null;
-            $relationship2  =   isset($relationships[1]) ? $relationships[1] : null;
-            $relationship3  =   isset($relationships[2]) ? $relationships[2] : null;
-        }else{
-            $relationship1  =   $relationships;
-            $relationship2  =   null;
-            $relationship3  =   null;
-        }
-        $isBoolean=is_bool($data);
-        $isValidData= $isBoolean?true: (!!$data);
-
-        if($isValidData)
+        
+        $recrusive=function ($query,$relationships,$column,$data,$type) use (&$recrusive)
         {
-            $query->whereHas($relationship1, function ($query) use ($data,$column,$relationship2,$relationship3,$type){
-                if($relationship2){
-                    return $query->whereHas($relationship2, function ($query) use ($data,$column,$type,$relationship3){
-                        if($relationship3){
-                            return $query->whereHas($relationship3, function ($query) use ($data,$column,$type){
-                                if($type=='like'){
-                                    return  $query->where($column,'like', '%' . $data. '%');
-                                }
-                                if($type=='whereNotIn'){
-                                    return  $query->whereNotIn($column, $data);
-                                }
-                                if($type=='whereIn'){
-                                    return  $query->whereIn($column, $data);
-                                }
-                                if($type==null){
-                                    return  $query->where($column,$data);
-                                }
-                               return  $query->where($column,$type,$data);
-                            });
-                        }
-                        if($type=='like'){
-                            return  $query->where($column,'like', '%' . $data. '%');
-                        }
-                        if($type=='whereNotIn'){
-                            return  $query->whereNotIn($column, $data);
-                        }
-                        if($type=='whereIn'){
-                            return  $query->whereIn($column, $data);
-                        }
-                        if($type==null){
-                            return  $query->where($column,$data);
-                        }
-                       return  $query->where($column,$type,$data);
-                    });
+            $removed=array_shift($relationships);
+            $query->whereHas( $removed, function (Builder $query) use ($relationships,$column,$data,$type,$recrusive) 
+            {
+                $continue=count($relationships)>1; 
+                if($continue){ return $recrusive($query,$relationships,$column,$data,$type);}
+
+                if($type=='whereDate'){
+                    return  $query->whereDate($column, $type ,$data);
                 }
-                if($type=='like'){
-                    return  $query->where($column,'like', '%' . $data. '%');
+                if($type=='whereMonth'){
+                    return  $query->whereMonth($column, $type ,$data);
+                }
+                if($type=='whereDay'){
+                    return  $query->whereDay($column, $type ,$data);
+                }
+                if($type=='whereYear'){
+                    return  $query->whereYear($column, $type ,$data);
+                }
+                if($type=='whereTime'){
+                    return  $query->whereTime($column, $type ,$data);
+                }
+                if($type=='whereNull'){
+                    return  $query->whereNull($column);
+                }
+                if($type=='whereNotNull '){
+                    return  $query->whereNotNull($column);
+                }
+                if($type=='whereBetween'){
+                    return  $query->whereBetween($column, $data);
+                }
+                if($type=='whereNotBetween'){ 
+                    return  $query->whereNotBetween($column, $data);
                 }
                 if($type=='whereNotIn'){
                     return  $query->whereNotIn($column, $data);
                 }
-                if($type=='whereIn'){
-                    return  $query->whereIn($column, $data);
+                if($type=='whereColumn'){
+                    return  $query->whereNotIn($column, $data);
                 }
                 if($type==null){
                     return  $query->where($column,$data);
                 }
-               return  $query->where($column,$type,$data);
-             });
-        }
-        return $query;
-    }
+                return  $query->where($column,$type,$data);
+            });         
+        };
+         
+        $isValidData= is_bool($data)?true: (!!$data);
+        if(!$isValidData){return $query;}
+        $relationships=is_string($relationships)?[$relationships]:$relationships;
 
-    public function scopeSearchByDate($query,$data, $operator, $column='created_at')
-    {
-        if($data)
-        {
-            $fixed_format=Carbon::createFromFormat('d-m-Y', $data)->format("Y-m-d");
-           return $query->whereDate($column,$operator, $fixed_format);
-        }
-        return $query;
-    }
+        return $recrusive($query,$relationships,$column,$data,$type);
 
-    public function scopeSearchByHavingDate($query,$data, $operator, $column,$startDate=true)
-    {
-        if($data)
-        {
-            $fixed_format='';
-            if ($startDate)
-            {
-                $fixed_format=Carbon::createFromFormat('d-m-Y', $data)->hour(0)->minutes(0)->second(0)->format("Y-m-d H:i:s");
-            }else
-            {
-                $fixed_format=Carbon::createFromFormat('d-m-Y', $data)->hour(23)->minutes(59)->second(59)->format("Y-m-d H:i:s");
-            }
+}
 
-           return $query->having($column,$operator, $fixed_format);
-        }
-        return $query;
-    }
+
 }

@@ -22,8 +22,5 @@ class OfficeSubscription extends Model
     {
         return $this->belongsTo(BranchOffice::class,'branch_office_id');
     }
-    public function users()
-    {
-        return $this->belongsToMany(User::class,'OfficeSubscription', 'branch_office_id','user_id');
-    }
+
 }

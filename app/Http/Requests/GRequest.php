@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\user;
+namespace App\Http\Requests;
 
 use App\Traits\Responser;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateRequest extends FormRequest
+class GRequest extends FormRequest
 {
     use Responser;
     /**
@@ -28,12 +28,7 @@ class UpdateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'password'              =>  'min:8',
-            'email'                 =>  'email|unique:users,email',
-            'id'                 =>  'required|exists:users,id|numeric|gte:1',
- 
-        ];
+        return [];
     }
     
     protected  function failedValidation(Validator $validator)

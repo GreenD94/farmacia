@@ -25,7 +25,8 @@ Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::group(['middleware' => 'auth:sanctum'], function () 
 {
-    Route::get  ('/user',[UsersController::class,'index'])->name('api.user.index');
+    //user
+    Route::post('/user', [UsersController::class,'store'])->name('api.users.store');
     Route::get  ('/user/show',[UsersController::class,'show'])->name('api.user.show');
     Route::delete('/user', [UsersController::class,'destroy'])->name('api.user.destroy');
     Route::put('/user', [UsersController::class,'update'])->name('api.user.update');
@@ -38,5 +39,5 @@ Route::group(['middleware' => 'auth:sanctum'], function ()
 Route::post('/app-login', [AppLoginsController::class,'store'])->name('api.app_login.store');    
 Route::post('/login', [LoginsController::class,'store'])->name('api.login.store');    
 Route::post('/chat',[ChatsController::class,'store'])->name('api.chat.store');
-Route::post('/user', [UsersController::class,'store'])->name('api.users.store');
+Route::get  ('/user',[UsersController::class,'index'])->name('api.user.index');
 
