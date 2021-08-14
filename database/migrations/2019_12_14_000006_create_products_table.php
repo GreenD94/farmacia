@@ -15,12 +15,13 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->unsignedBigInteger('branch_office_id');
             $table->foreign('branch_office_id')->references('id')->on('branch_offices')->onDelete('cascade');
             $table->unsignedBigInteger('product_detail_id');
             $table->foreign('product_detail_id')->references('id')->on('product_details');
-            $table->decimal('price');
+            $table->decimal('price')->nullable();
+            $table->boolean('show_price')->default(true);
+            $table->boolean('available')->default(true);
             $table->timestamps();
         });
     }

@@ -12,7 +12,7 @@ class OfficeSubscription extends Model
      * @var array
      */
     protected $table = 'office_subscriptions';
-    protected $fillable = ['branch_office_id','user_id','active'];
+    protected $fillable = ['branch_office_id','user_id'];
 
     public function user()
     {
@@ -21,6 +21,14 @@ class OfficeSubscription extends Model
     public function BranchOffice()
     {
         return $this->belongsTo(BranchOffice::class,'branch_office_id');
+    }
+    public function StatusLogs()
+    {
+        return $this->hasMany(OfficeSubscriptionsStatusLog::class, 'office_subscription_id', 'id');
+    }
+    public function Statuses()
+    {
+        return $this->morphToMany(Tag::class, 'taggable','tag_subscriptions')->withTimestamps();
     }
 
 }

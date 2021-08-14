@@ -33,6 +33,9 @@ class UpdateRequest extends FormRequest
             'company_id'              =>  'numeric|gte:1|exists:companies,id',
             'email'                 =>  'email|unique:users,email',
             'active'                 =>  'boolean',
+            'name'                 =>  [],
+            'dni'                 =>  [],
+            'phone'                 =>  [],
         ];
     }
     

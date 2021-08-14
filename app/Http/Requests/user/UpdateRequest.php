@@ -31,8 +31,8 @@ class UpdateRequest extends FormRequest
         return [
             'password'              =>  'min:8',
             'email'                 =>  'email|unique:users,email',
-            'id'                 =>  'required|exists:users,id|numeric|gte:1',
- 
+            'id'                 =>  'required|exists:users,id|numeric|gte:1',            
+            'birth_date'                 =>  'date', 
         ];
     }
     

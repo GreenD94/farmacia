@@ -19,14 +19,8 @@ class CreateBranchOfficesTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->string('name');
             $table->string('dni');            
-            $table->string('phone');
-            $table->string('email');
-            $table->string('background_color')->nullable();
-            $table->string('main_color')->nullable();
-            $table->string('secondary_color')->nullable();
-            $table->string('text_one_color')->nullable();
-            $table->string('text_two_color')->nullable();
-            $table->string('logo_white')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

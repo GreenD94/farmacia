@@ -2,6 +2,7 @@
 
 namespace Spatie\Permission\Models;
 
+use App\Traits\Query;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Permission\Contracts\Role as RoleContract;
@@ -16,6 +17,7 @@ class Role extends Model implements RoleContract
 {
     use HasPermissions;
     use RefreshesPermissionCache;
+    use Query;
 
     protected $guarded = ['id'];
 

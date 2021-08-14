@@ -15,8 +15,12 @@ class CreateImagesTable extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
+            $table->string('imageable_type');
+            $table->integer('imageable_id');
+            $table->unsignedBigInteger('tag_id');
+            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
             $table->string('name');
-            $table->string('path');
+            $table->string('path');     
             $table->timestamps();
         });
     }

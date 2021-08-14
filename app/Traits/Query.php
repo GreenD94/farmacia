@@ -59,7 +59,7 @@ trait Query{
             $removed=array_shift($relationships);
             $query->whereHas( $removed, function (Builder $query) use ($relationships,$column,$data,$type,$recrusive) 
             {
-                $continue=count($relationships)>1; 
+                $continue=count($relationships)>=1; 
                 if($continue){ return $recrusive($query,$relationships,$column,$data,$type);}
 
                 if($type=='whereDate'){

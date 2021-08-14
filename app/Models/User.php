@@ -27,7 +27,6 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
-        'photo_default',
         'birth_date'
     ];
 
@@ -59,18 +58,22 @@ class User extends Authenticatable
     {
         return $this->hasMany(OfficeSubscription::class,'user_id', 'id');
     }
-    public function offices()
+    public function Offices()
     {
-        return $this->belongsToMany(BranchOffice::class,'office_subscriptions', 'user_id', 'branch_office_id');
+        return $this->belongsToMany(BranchOffice::class,'office_subscriptions', 'user_id', 'branch_office_id')->withTimestamps();
     }
-    public function address()
+    public function Address()
     {
         return $this->morphOne(Address::class, 'addressable');
     }
     public function SocialMediaSubscription()
     {
-        return $this->morphMany(SocialMediaSubscription::class, 'subscribable');
+        return $this->morphMany(TagSubscription::class, 'taggable');
     }
 
+    public function Images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }    
     
 }

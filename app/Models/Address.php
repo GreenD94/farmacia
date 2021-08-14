@@ -14,12 +14,12 @@ class Address extends Model
     protected $table = 'addresses';
     protected $fillable = ['state_id','addressable_type','addressable_id','adress','city','latitude','longitude','active'];
     
-    public function addressable()
+    public function Addressable()
     {
         return $this->morphTo();
     }
     
-    public function state()
+    public function State()
     {
         return $this->belongsTo(State::class,'state_id', 'id');
     }

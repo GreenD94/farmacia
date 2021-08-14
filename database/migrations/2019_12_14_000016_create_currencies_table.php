@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSocialMediaSubscriptionsTable extends Migration
+class CreateCurrenciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateSocialMediaSubscriptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('social_media_subscriptions', function (Blueprint $table) {
+        Schema::create('currencies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('tag_id');
             $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
-            $table->string('subscribable_type');
-            $table->integer('subscribable_id');
-            $table->string('name');             
+            $table->unsignedBigInteger('branch_office_id');
+            $table->foreign('branch_office_id')->references('id')->on('branch_offices')->onDelete('cascade'); 
+            $table->decimal('value');    
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateSocialMediaSubscriptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('social_media_subscriptions');
+        Schema::dropIfExists('currencies');
     }
 }

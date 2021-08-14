@@ -34,6 +34,7 @@ class StoreRequest extends FormRequest
             'first_name'                 =>  'required',
             'last_name'                 =>  'required',
             'phone'                 =>  'required',
+            'birth_date'                 =>  'date',
         ];
     }
     

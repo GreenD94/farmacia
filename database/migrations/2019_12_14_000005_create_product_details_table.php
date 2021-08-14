@@ -16,6 +16,7 @@ class CreateProductDetailsTable extends Migration
         Schema::create('product_details', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('description')->nullable();;
             $table->timestamps();
         });
     }

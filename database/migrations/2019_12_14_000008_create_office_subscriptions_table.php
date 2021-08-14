@@ -19,7 +19,7 @@ class CreateOfficeSubscriptionsTable extends Migration
             $table->foreign('branch_office_id')->references('id')->on('branch_offices')->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->boolean('active');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

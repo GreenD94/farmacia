@@ -41,7 +41,7 @@ class BranchOfficesController extends Controller
     {
 
             $model    =   BranchOffice::whereId( $request->id);
-            $data=$request->except(['id']);
+            $data=$request->only(['company_id','name','dni','phone','email','active']);
             $result=$model->update( $data);
             $model    = $model->first();
             return (!!$result)?$this->successResponse($model,'successful update'):$this->errorResponse($model,'failed to update', 401);
@@ -60,8 +60,7 @@ class BranchOfficesController extends Controller
 
     public function store(StoreRequest $request)
     {
-                  
-            $data=$request->all();
+            $data=$request->only(['company_id','name','dni','phone','email','active']);
             $result=BranchOffice::create($data);
             return (!!$result)?$this->successResponse($result,'successful store',201):$this->errorResponse($result,'failed to store', 401);
     }
@@ -77,12 +76,6 @@ class BranchOfficesController extends Controller
         $query          ->  SearchBy('dni',$request->dni,$request->dni_operator);
         $query          ->  SearchBy('phone',$request->phone,$request->phone_operator);
         $query          ->  SearchBy('email',$request->email,$request->email_operator);
-        $query          ->  SearchBy('background_color',$request->background_color,$request->background_color_operator);
-        $query          ->  SearchBy('main_color',$request->main_color,$request->main_color_operator);
-        $query          ->  SearchBy('secondary_color',$request->secondary_color,$request->secondary_color_operator);
-        $query          ->  SearchBy('text_one_color',$request->text_one_color,$request->text_one_color_operator);
-        $query          ->  SearchBy('text_two_color',$request->text_two_color,$request->text_two_color_operator);
-        $query          ->  SearchBy('logo_white',$request->logo_white,$request->logo_white_operator);
         $query          ->  SearchBy('active',$request->active,$request->active_operator);
 
 
@@ -90,10 +83,30 @@ class BranchOfficesController extends Controller
         $query          ->  SearchByRelationship('OfficeSubscriptions','user_id',$request->OfficeSubscriptions_user_id,$request->OfficeSubscriptions_user_id_operator);
         $query          ->  SearchByRelationship('OfficeSubscriptions','active',$request->OfficeSubscriptions_active,$request->OfficeSubscriptions_active_operator);          
 
-        $query          ->  SearchByRelationship('Company','id',$request->offices_id,$request->offices_id_operator);  
-        $query          ->  SearchByRelationship('Company','name',$request->offices_name,$request->offices_name_operator);  
+        $query          ->  SearchByRelationship('Company','id',$request->Company_id,$request->Company_id_operator);  
+        $query          ->  SearchByRelationship('Company','name',$request->Company_name,$request->Company_name_operator);  
 
+        $query          ->  SearchByRelationship('Currency','id',$request->Currency_id,$request->Currency_id_operator);
+        $query          ->  SearchByRelationship('Currency','value',$request->Currency_value,$request->Currency_value_operator); 
+        $query          ->  SearchByRelationship('Currency','tag_id',$request->Currency_tag_id,$request->Currency_tag_id_operator);  
+
+        $query          ->  SearchByRelationship('Currency.Tag','name',$request->Currency_id,$request->Currency_id_operator);
+
+        $query          ->  SearchByRelationship('Products','id',$request->Products_id,$request->Products_id_operator);
+        $query          ->  SearchByRelationship('Products','branch_office_id',$request->Products_branch_office_id,$request->Products_branch_office_id_operator);
+        $query          ->  SearchByRelationship('Products','product_detail_id',$request->Products_product_detail_id,$request->Products_product_detail_id_operator);
+        $query          ->  SearchByRelationship('Products','price',$request->Products_price,$request->Products_price_operator);
+        $query          ->  SearchByRelationship('Products','show_price',$request->Products_show_price,$request->Products_show_price_operator);
+        $query          ->  SearchByRelationship('Products','available',$request->Products_available,$request->Products_available_operator);
+
+        $query          ->  SearchByRelationship('ProductDetails','id',$request->ProductDetails_id,$request->ProductDetails_id_operator);
+        $query          ->  SearchByRelationship('ProductDetails','name',$request->ProductDetails_name,$request->ProductDetails_name_operator);
+        $query          ->  SearchByRelationship('ProductDetails','description',$request->ProductDetails_description,$request->ProductDetails_description_operator);
         
+        $query          ->  SearchByRelationship(['ProductDetails.Categories'],'id',$request->ProductCategories_id,$request->ProductCategories_id_operator);
+        $query          ->  SearchByRelationship(['ProductDetails.Categories'],'name',$request->ProductCategories_name,$request->ProductCategories_name_operator);
+        
+
         $query          ->  SearchByRelationship('address','addressable_type',$request->address_addressable_type,$request->address_addressable_type_operator);
         $query          ->  SearchByRelationship('address','addressable_id',$request->address_addressable_id,$request->address_addressable_id_operator);  
         $query          ->  SearchByRelationship('address','adress',$request->address_adress,$request->address_adress_operator);  
