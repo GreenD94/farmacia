@@ -23,8 +23,6 @@ class BranchOfficesController extends Controller
         $result=$request->isPaginate?$Query->paginate($paginate):$Query->get();
         
         return $this->successResponse($result);
-            
-        
     }
   
 
@@ -79,7 +77,7 @@ class BranchOfficesController extends Controller
         $query          ->  SearchBy('active',$request->active,$request->active_operator);
 
 
-        $query          ->  SearchByRelationship('OfficeSubscriptions','branch_office_id',$request->OfficeSubscriptions_branch_office_id,$request->OfficeSubscriptions_branch_office_id_operator);
+        
         $query          ->  SearchByRelationship('OfficeSubscriptions','user_id',$request->OfficeSubscriptions_user_id,$request->OfficeSubscriptions_user_id_operator);
         $query          ->  SearchByRelationship('OfficeSubscriptions','active',$request->OfficeSubscriptions_active,$request->OfficeSubscriptions_active_operator);          
 
@@ -90,7 +88,7 @@ class BranchOfficesController extends Controller
         $query          ->  SearchByRelationship('Currency','value',$request->Currency_value,$request->Currency_value_operator); 
         $query          ->  SearchByRelationship('Currency','tag_id',$request->Currency_tag_id,$request->Currency_tag_id_operator);  
 
-        $query          ->  SearchByRelationship('Currency.Tag','name',$request->Currency_id,$request->Currency_id_operator);
+        $query          ->  SearchByRelationship(['Currency','Tag'],'tags.name',$request->Currency_tag_name,$request->Currency_tag_name_operator);
 
         $query          ->  SearchByRelationship('Products','id',$request->Products_id,$request->Products_id_operator);
         $query          ->  SearchByRelationship('Products','branch_office_id',$request->Products_branch_office_id,$request->Products_branch_office_id_operator);
@@ -99,30 +97,29 @@ class BranchOfficesController extends Controller
         $query          ->  SearchByRelationship('Products','show_price',$request->Products_show_price,$request->Products_show_price_operator);
         $query          ->  SearchByRelationship('Products','available',$request->Products_available,$request->Products_available_operator);
 
-        $query          ->  SearchByRelationship('ProductDetails','id',$request->ProductDetails_id,$request->ProductDetails_id_operator);
+
         $query          ->  SearchByRelationship('ProductDetails','name',$request->ProductDetails_name,$request->ProductDetails_name_operator);
         $query          ->  SearchByRelationship('ProductDetails','description',$request->ProductDetails_description,$request->ProductDetails_description_operator);
         
-        $query          ->  SearchByRelationship(['ProductDetails.Categories'],'id',$request->ProductCategories_id,$request->ProductCategories_id_operator);
-        $query          ->  SearchByRelationship(['ProductDetails.Categories'],'name',$request->ProductCategories_name,$request->ProductCategories_name_operator);
+        $query          ->  SearchByRelationship(['ProductDetails'.'Categories'],'tags.id',$request->ProductCategories_id,$request->ProductCategories_id_operator);
+        $query          ->  SearchByRelationship(['ProductDetails'.'Categories'],'tags.name',$request->ProductCategories_name,$request->ProductCategories_name_operator);
         
 
-        $query          ->  SearchByRelationship('address','addressable_type',$request->address_addressable_type,$request->address_addressable_type_operator);
-        $query          ->  SearchByRelationship('address','addressable_id',$request->address_addressable_id,$request->address_addressable_id_operator);  
+        $query          ->  SearchByRelationship('address','addressable_id',$request->address_branch_office,$request->address_branch_office_operator);  
         $query          ->  SearchByRelationship('address','adress',$request->address_adress,$request->address_adress_operator);  
         $query          ->  SearchByRelationship('address','city',$request->address_city,$request->address_city_operator);  
         $query          ->  SearchByRelationship('address','latitude',$request->address_latitude,$request->address_latitude_operator);  
         $query          ->  SearchByRelationship('address','longitude',$request->address_longitude,$request->address_longitude_operator);  
         $query          ->  SearchByRelationship('address','active',$request->address_active,$request->address_active_operator);  
 
-        $query          ->  SearchByRelationship(['address','state'],'id',$request->state_id,$request->state_id_operator);  
-        $query          ->  SearchByRelationship(['address','state'],'country_id',$request->state_country_id,$request->state_country_id_operator);  
-        $query          ->  SearchByRelationship(['address','state'],'name',$request->state_name,$request->state_name_operator); 
+        $query          ->  SearchByRelationship(['address','state'],'states.id',$request->state_id,$request->state_id_operator);  
+        $query          ->  SearchByRelationship(['address','state'],'states.country_id',$request->state_country_id,$request->state_country_id_operator);  
+        $query          ->  SearchByRelationship(['address','state'],'states.name',$request->state_name,$request->state_name_operator); 
 
-        $query          ->  SearchByRelationship(['address','state','country'],'id',$request->country_id,$request->country_id_operator);        
-        $query          ->  SearchByRelationship(['address','state','country'],'code',$request->country_code,$request->country_code_operator);        
-        $query          ->  SearchByRelationship(['address','state','country'],'name',$request->country_name,$request->country_name_operator);  
-        $query          ->  SearchByRelationship(['address','state','country'],'image',$request->country_image,$request->country_image_operator); 
+        $query          ->  SearchByRelationship(['address','state','country'],'countries.id',$request->country_id,$request->country_id_operator);        
+        $query          ->  SearchByRelationship(['address','state','country'],'countries.code',$request->country_code,$request->country_code_operator);        
+        $query          ->  SearchByRelationship(['address','state','country'],'countries.name',$request->country_name,$request->country_name_operator);  
+        $query          ->  SearchByRelationship(['address','state','country'],'countries.image',$request->country_image,$request->country_image_operator); 
 
 
         return  $query;

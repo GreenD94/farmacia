@@ -89,7 +89,7 @@ class UserImageController extends Controller
         $request->has('with')?$query->with($request->with):null;
         $query          ->where('imageable_type','App\Models\User');
         $query          ->  SearchBy('id',$request->id,$request->id_operator);
-        $query          ->  SearchBy('name',$request->first_name,$request->first_name_operator);
+        $query          ->  SearchBy('name',$request->name,$request->name_operator);
         $query          ->  SearchBy('imageable_id',$request->user_id,$request->user_id_operator);
         $query          ->  SearchBy('tag_id',$request->role_id,$request->role_id_operator);
         $query          ->  SearchBy('path',$request->path,$request->path_operator);

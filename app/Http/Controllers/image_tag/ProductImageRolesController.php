@@ -4,8 +4,8 @@ namespace App\Http\Controllers\image_tag;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GRequest;
-use App\Http\Requests\image_role\UserStoreRequest;
-use App\Http\Requests\image_role\UserUpdateRequest;
+use App\Http\Requests\image_role\ProductStoreRequest;
+use App\Http\Requests\image_role\ProductUpdateRequest;
 use App\Models\Tag;
 use App\Traits\Responser;
 
@@ -41,7 +41,7 @@ class ProductImageRolesController extends Controller
         
     }
 
-    function update(UserUpdateRequest $request)
+    function update(ProductUpdateRequest $request)
     {
 
             $model    =   Tag::whereId( $request->id);
@@ -51,7 +51,7 @@ class ProductImageRolesController extends Controller
             return (!!$result)?$this->successResponse($model,'successful update'):$this->errorResponse($model,'failed to update', 401);       
     }
 
-    function destroy(UserUpdateRequest $request)
+    function destroy(ProductUpdateRequest $request)
     {
 
             $model =Tag::find($request->id);
@@ -61,7 +61,7 @@ class ProductImageRolesController extends Controller
     }
 
 
-    public function store(UserStoreRequest $request)
+    public function store(ProductStoreRequest $request)
     {             
             $data=$request->only('name');
             $data['type']='product_image';

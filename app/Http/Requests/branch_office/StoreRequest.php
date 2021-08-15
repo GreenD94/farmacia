@@ -33,7 +33,7 @@ class StoreRequest extends FormRequest
             'name'                 =>  'required',
             'dni'                 =>  'required',
             'phone'                 =>  'required',
-            'email'                 =>  'required|email|unique:users,email',
+            'email'                 =>  'required|email|unique:branch_offices,email',
             'active'                 =>  'boolean',
         ];
     }

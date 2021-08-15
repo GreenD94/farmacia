@@ -32,8 +32,9 @@ class UserStoreRequest extends FormRequest
     {
         return [
             'user_id'=>  ['required','exists:users,id','numeric','gte:1'],
-            'state_id'=>  ['required','exists:states,id ','numeric','gte:1'],
+            'state_id'=>  ['required','exists:states,id','numeric','gte:1'],
             'adress'=>  [ 'required'],
+            'city'=>  [ 'required'],
             'latitude'=>  [ 'numeric'],
             'longitude'=>  [ 'numeric'],
             'active'=>  [ 'boolean'],

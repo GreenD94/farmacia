@@ -34,7 +34,7 @@ class RolesController extends Controller
     function update(UpdateRequest $request)
     {
             $model    =   Role::whereId( $request->id);
-            $data=$request->except(['id']);
+            $data=$request->only(['name']);
             $result=$model->update( $data);
             $model    = $model->first();
             return (!!$result)?$this->successResponse($model,'successful update'):$this->errorResponse($model,'failed to update', 401);

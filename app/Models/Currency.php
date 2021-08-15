@@ -14,7 +14,7 @@ class Currency extends Model
      * @var array
      */
     protected $table = 'currencies';
-    protected $fillable = ['value','tag_id'];
+    protected $fillable = ['value','tag_id','branch_office_id'];
 
     public function tag()
     {

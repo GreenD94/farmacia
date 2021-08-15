@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\address;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\address\UserStoreRequest;
-use App\Http\Requests\address\UserUpdateRequest;
+use App\Http\Requests\address\OfficeStoreRequest;
+use App\Http\Requests\address\OfficeUpdateRequest;
 use App\Http\Requests\GRequest;
 use App\Models\Address;
 use App\Models\BranchOffice;
@@ -42,18 +42,18 @@ class OfficeAddressController extends Controller
         
     }
 
-    function update(UserUpdateRequest $request)
+    function update(OfficeUpdateRequest $request)
     {
 
             $model =Address::where('id',$request->id);
             $data=$request->only(['state_id','adress','city','latitude','longitude','active']);
-            if ($request->has('user_id')){$data['addressable_id']=$request->user_id;}
+            if ($request->has('branch_office_id')){$data['addressable_id']=$request->branch_office_id;}
             $result=$model->update( $data);
             $model    = $model->with('State.Country')->first();
             return (!!$result)?$this->successResponse($model,'successful update'):$this->errorResponse($model,'failed to update', 401);       
     }
 
-    function destroy(UserUpdateRequest $request)
+    function destroy(OfficeUpdateRequest $request)
     {
 
             $model =Address::find($request->id);
@@ -63,9 +63,9 @@ class OfficeAddressController extends Controller
     }
 
 
-    public function store(UserStoreRequest $request)
+    public function store(OfficeStoreRequest $request)
     {
-            $model=BranchOffice::find($request->user_id);  
+            $model=BranchOffice::find($request->branch_office_id);  
             $data=$request->only(['state_id','adress','city','latitude','longitude','active']);
             $result=$model->Address()->create($data);
             return (!!$result)?$this->successResponse($result,'successful store',201):$this->errorResponse($result,'failed to store', 401);
@@ -77,6 +77,7 @@ class OfficeAddressController extends Controller
         $request->has('with')?$query->with($request->with):null;
         $query          ->where('addressable_type','App\Models\BranchOffice');
         $query          ->  SearchBy('id',$request->id,$request->id_operator);
+        $query          ->  SearchBy('addressable_id',$request->branch_office_id,$request->branch_office_id_operator);
         $query          ->  SearchBy('state_id',$request->state_id,$request->state_id_operator);  
         $query          ->  SearchBy('adress',$request->adress,$request->adress_operator);  
         $query          ->  SearchBy('city',$request->city,$request->city_operator);

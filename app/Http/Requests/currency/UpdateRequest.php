@@ -20,7 +20,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        //if(!$this->ajax()){$this->errorResponse(null,'only ajax is accepted',403);}
+        if(!$this->ajax()){$this->errorResponse(null,'only ajax is accepted',403);}
         return true;
     }
 

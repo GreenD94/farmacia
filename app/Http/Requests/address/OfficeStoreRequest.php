@@ -33,6 +33,7 @@ class OfficeStoreRequest extends FormRequest
         return [
             'branch_office_id'=>  ['required','exists:branch_offices,id','numeric','gte:1'],
             'state_id'=>  ['required','exists:states,id ','numeric','gte:1'],
+            'city'=>  [ 'required'],
             'adress'=>  [ 'required'],
             'latitude'=>  [ 'numeric'],
             'longitude'=>  [ 'numeric'],

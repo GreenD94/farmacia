@@ -81,6 +81,7 @@ class UsersController extends Controller
         $query          ->  SearchBy('email',$request->email,$request->email_operator);  
         $query          ->  SearchBy('password',$request->password,$request->password_operator);  
         $query          ->  SearchBy('phone',$request->phone,$request->phone_operator);
+        $query          ->  SearchBy('birth_date',$request->phone,$request->phone_operator);
 
         $query          ->  SearchByRelationship('roles','id',$request->role_id,$request->role_id_operator);
         $query          ->  SearchByRelationship('roles','name',$request->role_name,$request->role_name_operator);
@@ -95,17 +96,15 @@ class UsersController extends Controller
 
 
 
-        $query          ->  SearchByRelationship('offices','id',$request->offices_id,$request->offices_id_operator); 
-        $query          ->  SearchByRelationship('offices','company_id',$request->offices_company_id,$request->offices_company_id_operator);  
-        $query          ->  SearchByRelationship('offices','name',$request->offices_name,$request->offices_name_operator);
-        $query          ->  SearchByRelationship('offices','dni',$request->offices_dni,$request->offices_dni_operator);
-        $query          ->  SearchByRelationship('offices','phone',$request->offices_phone,$request->offices_phone_operator);
-        $query          ->  SearchByRelationship('offices','email',$request->offices_email,$request->offices_email_operator);
-        $query          ->  SearchByRelationship('offices','active',$request->offices_active,$request->offices_active_operator);          
+        $query          ->  SearchByRelationship('Offices','branch_offices.id',$request->offices_id,$request->offices_id_operator); 
+        $query          ->  SearchByRelationship('Offices','branch_offices.company_id',$request->offices_company_id,$request->offices_company_id_operator);  
+        $query          ->  SearchByRelationship('Offices','branch_offices.name',$request->offices_name,$request->offices_name_operator);
+        $query          ->  SearchByRelationship('Offices','branch_offices.dni',$request->offices_dni,$request->offices_dni_operator);
+        $query          ->  SearchByRelationship('Offices','branch_offices.phone',$request->offices_phone,$request->offices_phone_operator);
+        $query          ->  SearchByRelationship('Offices','branch_offices.email',$request->offices_email,$request->offices_email_operator);
+        $query          ->  SearchByRelationship('Offices','branch_offices.active',$request->offices_active,$request->offices_active_operator);          
 
-        $query          ->  SearchByRelationship('address','id',$request->address_id,$request->address_id_operator);  
-        $query          ->  SearchByRelationship('address','addressable_type',$request->address_addressable_type,$request->address_addressable_type_operator);
-        $query          ->  SearchByRelationship('address','addressable_id',$request->address_addressable_id,$request->address_addressable_id_operator);  
+        $query          ->  SearchByRelationship('address','id',$request->address_id,$request->address_id_operator);   
         $query          ->  SearchByRelationship('address','adress',$request->address_adress,$request->address_adress_operator);  
         $query          ->  SearchByRelationship('address','city',$request->address_city,$request->address_city_operator);  
         $query          ->  SearchByRelationship('address','latitude',$request->address_latitude,$request->address_latitude_operator);  

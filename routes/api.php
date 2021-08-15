@@ -19,6 +19,7 @@ use App\Http\Controllers\image_tag\UserImageRolesController;
 use App\Http\Controllers\login\AppLoginsController;
 use App\Http\Controllers\login\LoginsController;
 use App\Http\Controllers\office_subscription\OfficeSubscriptionsController;
+use App\Http\Controllers\product\ProductDetailsController;
 use App\Http\Controllers\product\ProductsController;
 use App\Http\Controllers\role\RolesController;
 use App\Http\Controllers\role_subscription\RolesubscriptionsController;
@@ -146,11 +147,11 @@ Route::group(['middleware' => 'auth:sanctum'], function ()
     Route::put('/product', [ProductsController::class,'update'])->name('api.product.update');
 
     //product category
-    Route::get  ('/product-detail',[ProductDetail::class,'index'])->name('api.product_detail.index');
-    Route::post('/product-detail', [ProductDetail::class,'store'])->name('api.product_detail.store');
-    Route::get  ('/product-detail/show',[ProductDetail::class,'show'])->name('api.product_detail.show');
-    Route::delete('/product-detail', [ProductDetail::class,'destroy'])->name('api.product_detail.destroy');
-    Route::put('/product-detail', [ProductDetail::class,'update'])->name('api.product_detail.update');
+    Route::get  ('/product-detail',[ProductDetailsController::class,'index'])->name('api.product_detail.index');
+    Route::post('/product-detail', [ProductDetailsController::class,'store'])->name('api.product_detail.store');
+    Route::get  ('/product-detail/show',[ProductDetailsController::class,'show'])->name('api.product_detail.show');
+    Route::delete('/product-detail', [ProductDetailsController::class,'destroy'])->name('api.product_detail.destroy');
+    Route::put('/product-detail', [ProductDetailsController::class,'update'])->name('api.product_detail.update');
 
     
     //product image role

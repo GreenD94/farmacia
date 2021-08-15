@@ -33,8 +33,9 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'user_id'=>  ['exists:users,id','numeric','gte:1'],
-            'state_id'=>  ['exists:states,id ','numeric','gte:1'],
+            'state_id'=>  ['exists:states,id','numeric','gte:1'],
             'adress'=>  [ ],
+            'city'=>  [ ],
             'latitude'=>  [ 'numeric'],
             'longitude'=>  [ 'numeric'],
             'active'=>  [ 'boolean'],

@@ -76,7 +76,7 @@ class CategoriesController extends Controller
         $request->has('with')?$query->with($request->with):null;
         $query          ->where('type','product_category');
         $query          ->  SearchBy('id',$request->id,$request->id_operator);
-        $query          ->  SearchBy('name',$request->first_name,$request->first_name_operator);  
+        $query          ->  SearchBy('name',$request->name,$request->name_operator);  
 
         return  $query;
     }

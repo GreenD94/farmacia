@@ -77,19 +77,20 @@ class UserAddressController extends Controller
         $request->has('with')?$query->with($request->with):null;
         $query          ->where('addressable_type','App\Models\User');
         $query          ->  SearchBy('id',$request->id,$request->id_operator);
+        $query          ->  SearchBy('addressable_id',$request->user_id,$request->user_id_operator);
         $query          ->  SearchBy('state_id',$request->state_id,$request->state_id_operator);  
         $query          ->  SearchBy('adress',$request->adress,$request->adress_operator);  
         $query          ->  SearchBy('city',$request->city,$request->city_operator);
         $query          ->  SearchBy('latitude',$request->latitude,$request->latitude_operator);
         $query          ->  SearchBy('longitude',$request->longitude,$request->longitude_operator);
         $query          ->  SearchBy('active',$request->active,$request->active_operator);  
+        
+        $query          ->  SearchByRelationship('State','states.name',$request->State_name,$request->State_name_operator);
+        $query          ->  SearchByRelationship('State','states.type',$request->State_type,$request->State_type_operator);
 
-        $query          ->  SearchByRelationship('State','name',$request->State_name,$request->State_name_operator);
-        $query          ->  SearchByRelationship('State','type',$request->State_type,$request->State_type_operator);
-
-        $query          ->  SearchByRelationship(['State','Country'],'id',$request->Country_id,$request->Country_id_operator);
-        $query          ->  SearchByRelationship(['State','Country'],'name',$request->Country_name,$request->Country_name_operator);
-        $query          ->  SearchByRelationship(['State','Country'],'code',$request->Country_code,$request->Country_code_operator);
+        $query          ->  SearchByRelationship(['State','Country'],'countries.id',$request->Country_id,$request->Country_id_operator);
+        $query          ->  SearchByRelationship(['State','Country'],'countries.name',$request->Country_name,$request->Country_name_operator);
+        $query          ->  SearchByRelationship(['State','Country'],'countries.code',$request->Country_code,$request->Country_code_operator);
 
 
         return  $query;

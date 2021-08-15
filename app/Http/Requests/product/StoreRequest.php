@@ -32,8 +32,8 @@ class StoreRequest extends FormRequest
             'branch_office_id'=>  ['required','exists:branch_offices,id','numeric','gte:1'],
             'product_detail_id'=>  ['required','exists:product_details,id','numeric','gte:1'],
             'price'=>  ['required', 'numeric'],
-            'show_price'=>  [ 'required','boolean'],
-            'available'=>  [ 'required','boolean'],
+            'show_price'=>  [ 'boolean'],
+            'available'=>  [ 'boolean'],
         ];
     } 
     

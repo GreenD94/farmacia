@@ -43,11 +43,12 @@ class OfficeColorController extends Controller
     {
 
             $model    = TagSubscription::whereId( $request->id);
+            $data=[];
             if ( $request->has('branch_office_id')) {$data['taggable_id']=$request->branch_office_id;}
-            if ( $request->has('name')) {$data['name']=$request->name;}
+            if ( $request->has('color')) {$data['name']=$request->color;}
             if ( $request->has('role_id')) {$data['tag_id']=$request->role_id;}
             $result=$model->update($data);  
-            $model    = $model->with('Colors.Tag')->first();
+            $model    = $model->with('Tag')->first();
             return (!!$result)?$this->successResponse($model,'successful update'):$this->errorResponse($model,'failed to update', 401);       
     }
 
@@ -79,8 +80,8 @@ class OfficeColorController extends Controller
         $request->has('with')?$query->with($request->with):null;
         $query          ->where('taggable_type','App\Models\BranchOffice');
         $query          ->  SearchBy('id',$request->id,$request->id_operator);
-        $query          ->  SearchBy('name',$request->first_name,$request->first_name_operator);
-        $query          ->  SearchBy('taggable_id',$request->user_id,$request->user_id_operator);
+        $query          ->  SearchBy('addressable_id',$request->branch_office_id,$request->branch_office_id_operator);
+        $query          ->  SearchBy('name',$request->name,$request->name_operator);
         $query          ->  SearchBy('tag_id',$request->role_id,$request->role_id_operator);
         
         $query          ->  SearchByRelationship('Tag','name',$request->role_name,$request->role_name_operator);

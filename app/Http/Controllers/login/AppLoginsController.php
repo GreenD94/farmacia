@@ -22,10 +22,8 @@ class AppLoginsController  extends Controller
                     'Address.State.Country',
                     'SocialMediaSubscription.SocialMedia',
                     'Offices.Address.State.Country',
-                    'Offices.Images.Detail',
                     'Offices.Images.Tag',
                     'Offices.Colors.Tag',
-                    'Images.Detail',
                     'Images.Tag',
                     'roles'
                 ])->first();
@@ -43,12 +41,14 @@ class AppLoginsController  extends Controller
 
            $offices=(!!$user->Offices)?$user->Offices->makeHidden(['company_id','created_at','updated_at']):[];
             $shops=$offices->map(function ($item, $key) {
-                $addres=(!!$item->address)?$item->address->makeHidden(['id','addressable_type','addressable_id','state_id','created_at','updated_at'])->attributesToArray():[];
+               
+                $addres=(!!$item->address)?$item->address->makeHidden(['id','addressable_type','addressable_id','state_id','created_at','updated_at'])->attributesToArray():[];                $shop=$item->attributesToArray();
+                $colors=(!!$item->Colors)?$item->Colors->map(function ($color, $key){return array( $color->tag->name  =>$color->name );})->collapse()->toArray():[]; 
+                $images=(!!$item->Images)?$item->Images->map(function ($image, $key){return array( $image->tag->name  =>$image->path );})->collapse()->toArray():[]; 
+
+                if (!$addres) {return array_merge($shop, $colors,$images,$addres);}
                 $state=(!!$item->address->state)?$item->address->state->makeHidden(['id','country_id','created_at','updated_at'])->attributesToArray():[];       
                 $country=(!!$item->address->state->country)?$item->address->state->country->makeHidden(['id','code','image','created_at','updated_at'])->attributesToArray():[];
-                $shop=$item->attributesToArray();
-                $colors=(!!$item->Colors)?$item->Colors->map(function ($color, $key){return array( $color->tag->name  =>$color->name );})->collapse()->toArray():[]; 
-                $images=(!!$item->Images)?$item->Images->map(function ($image, $key){return array( $image->tag->name  =>$image->Detail->path );})->collapse()->toArray():[]; 
 
                 return array_merge($shop, $colors,$images,$addres,[
                     'state' => $state['name'],

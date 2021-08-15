@@ -32,7 +32,7 @@ class OfficeStoreRequest extends FormRequest
     {
         return [
             'branch_office_id'=>  ['required','exists:branch_offices,id','numeric','gte:1'],
-            'role_id'=>  ['required', new ExistsPair('tags','type','user_image','id')],
+            'role_id'=>  ['required', new ExistsPair('tags','type','branch_office_image','id')],
             'image'=>  ['required','file','mimes:jpg,jpeg,png'],
             'path'=>  [ 'required'],
                 ];

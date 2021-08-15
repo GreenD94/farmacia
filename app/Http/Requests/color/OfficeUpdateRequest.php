@@ -20,7 +20,7 @@ class OfficeUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        //if(!$this->ajax()){$this->errorResponse(null,'only ajax is accepted',403);}
+        if(!$this->ajax()){$this->errorResponse(null,'only ajax is accepted',403);}
         if(!$this->isOfficeColor()){$this->errorResponse(['id'=>['invalid id: id does not belong to office colors']]);}
         return true;
     }

@@ -35,6 +35,7 @@ class OfficeUpdateRequest extends FormRequest
             'branch_office_id'=>  ['exists:branch_offices,id','numeric','gte:1'],
             'state_id'=>  ['exists:states,id ','numeric','gte:1'],
             'adress'=>  [ ],
+            'city'=>  [ ],
             'latitude'=>  [ 'numeric'],
             'longitude'=>  [ 'numeric'],
             'active'=>  [ 'boolean'],

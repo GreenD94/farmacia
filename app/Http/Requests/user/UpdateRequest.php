@@ -33,6 +33,9 @@ class UpdateRequest extends FormRequest
             'email'                 =>  'email|unique:users,email',
             'id'                 =>  'required|exists:users,id|numeric|gte:1',            
             'birth_date'                 =>  'date', 
+            'first_name'                 =>  [], 
+            'last_name'                 =>  [], 
+            'phone'                 =>  [], 
         ];
     }
     

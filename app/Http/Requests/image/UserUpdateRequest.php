@@ -19,7 +19,7 @@ class UserUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        //if(!$this->ajax()){$this->errorResponse(null,'only ajax is accepted',403);}
+        if(!$this->ajax()){$this->errorResponse(null,'only ajax is accepted',403);}
         if(!$this->isUserImage()){$this->errorResponse(['id'=>['invalid id: id does not belong to user images']]);}
         return true;
     }

@@ -31,7 +31,7 @@ class UpdateRequest extends FormRequest
         return [
             'id'              =>  'required|numeric|gte:1|exists:branch_offices,id',
             'company_id'              =>  'numeric|gte:1|exists:companies,id',
-            'email'                 =>  'email|unique:users,email',
+            'email'                 =>  'email|unique:branch_offices,email',
             'active'                 =>  'boolean',
             'name'                 =>  [],
             'dni'                 =>  [],
