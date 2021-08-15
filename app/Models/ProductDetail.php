@@ -20,10 +20,7 @@ class ProductDetail extends Model
     {
         return $this->belongsTo(BranchOffice::class, 'branch_office_id', 'id');
     }
-    public function Categories()
-    {
-        return $this->morphToMany(Tag::class, 'taggable','tag_subscriptions')->withTimestamps();
-    }
+
     public function Images()
     {
         return $this->morphMany(ImageSubscription::class, 'imageable');

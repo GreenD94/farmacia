@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Requests\currency;
+namespace App\Http\Requests\image_role;
 
-use App\Models\Image;
-use App\Models\TagSubscription;
 use App\Rules\ExistsPair;
+use App\Rules\UniquePair;
 use App\Traits\Responser;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateRequest extends FormRequest
+class ProductUpdateRequest extends FormRequest
 {
     use Responser;
     /**
@@ -20,7 +19,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        //if(!$this->ajax()){$this->errorResponse(null,'only ajax is accepted',403);}
+        if(!$this->ajax()){$this->errorResponse(null,'only ajax is accepted',403);}
         return true;
     }
 
@@ -32,10 +31,8 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'branch_office_id'=>  ['exists:branch_offices,id','numeric','gte:1'],
-            'tag_id'=>  [ new ExistsPair('tags','type','currency_set','id')],
-            'value'=>  [ 'numeric'],
-            'id'=>  ['required','exists:currencies,id','numeric','gte:1'],  
+            'name'=>  [ new UniquePair('tags','type','product_image')],
+            'id'=>  ['required', new ExistsPair('tags','type','product_image') ,'numeric','gte:1'],     
         ];
     }
     
@@ -43,5 +40,4 @@ class UpdateRequest extends FormRequest
     {
         $this->errorResponse($validator->errors());
     }
-
 }

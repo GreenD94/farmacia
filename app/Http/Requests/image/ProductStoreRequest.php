@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Requests\currency;
+namespace App\Http\Requests\image;
 
-use App\Models\Image;
-use App\Models\TagSubscription;
 use App\Rules\ExistsPair;
+use App\Rules\UniquePair;
 use App\Traits\Responser;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateRequest extends FormRequest
+class ProductStoreRequest extends FormRequest
 {
     use Responser;
     /**
@@ -20,28 +19,27 @@ class UpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        //if(!$this->ajax()){$this->errorResponse(null,'only ajax is accepted',403);}
+        if(!$this->ajax()){$this->errorResponse(null,'only ajax is accepted',403);}
         return true;
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Get the validation rules that apply to the request. 
      *
      * @return array
      */
     public function rules()
     {
         return [
-            'branch_office_id'=>  ['exists:branch_offices,id','numeric','gte:1'],
-            'tag_id'=>  [ new ExistsPair('tags','type','currency_set','id')],
-            'value'=>  [ 'numeric'],
-            'id'=>  ['required','exists:currencies,id','numeric','gte:1'],  
-        ];
-    }
+            'product_id'=>  ['required','exists:products,id','numeric','gte:1'],
+            'role_id'=>  ['required', new ExistsPair('tags','type','product_image','id')],
+            'image'=>  ['required','file','mimes:jpg,jpeg,png'],
+            'path'=>  [ 'required'],
+                ];
+    } 
     
     protected  function failedValidation(Validator $validator)
     {
         $this->errorResponse($validator->errors());
     }
-
 }

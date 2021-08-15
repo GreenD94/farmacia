@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Requests\currency;
+namespace App\Http\Requests\category_subscription;
 
 use App\Models\Image;
-use App\Models\TagSubscription;
 use App\Rules\ExistsPair;
 use App\Traits\Responser;
 use Illuminate\Foundation\Http\FormRequest;
@@ -21,6 +20,7 @@ class UpdateRequest extends FormRequest
     public function authorize()
     {
         //if(!$this->ajax()){$this->errorResponse(null,'only ajax is accepted',403);}
+        if(!$this->isUserImage()){$this->errorResponse(['id'=>['invalid id: id does not belong to product category']]);}
         return true;
     }
 
@@ -32,10 +32,10 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'branch_office_id'=>  ['exists:branch_offices,id','numeric','gte:1'],
-            'tag_id'=>  [ new ExistsPair('tags','type','currency_set','id')],
-            'value'=>  [ 'numeric'],
-            'id'=>  ['required','exists:currencies,id','numeric','gte:1'],  
+            'product_id'=>  ['exists:products,id','numeric','gte:1'],
+            'category_id'=>  [ new ExistsPair('tags','type','product_category','id')],
+            'id'=>  ['required','numeric','gte:1'],
+   
         ];
     }
     
@@ -44,4 +44,8 @@ class UpdateRequest extends FormRequest
         $this->errorResponse($validator->errors());
     }
 
+    protected  function isUserImage()
+    {
+        return Image::where('id',$this->id)->SearchByRelationship('Tag','type','product_category')->exists();
+    }
 }

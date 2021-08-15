@@ -1,21 +1,29 @@
 <?php
 
+use App\Http\Controllers\address\OfficeAddressController;
+use App\Http\Controllers\address\UserAddressController;
 use App\Http\Controllers\branch_office\BranchOfficesController;
+use App\Http\Controllers\category\CategoriesController;
+use App\Http\Controllers\category_subscription\CategorySubscriptionsController;
 use App\Http\Controllers\chat\ChatsController;
 use App\Http\Controllers\color\OfficeColorController;
 use App\Http\Controllers\color_tag\OfficeColorRolesController;
-use App\Http\Controllers\companies\CompaniesController;
+use App\Http\Controllers\company\CompaniesController;
 use App\Http\Controllers\currency\CurrenciesController;
 use App\Http\Controllers\image\OfficeImageController;
+use App\Http\Controllers\image\ProductImageController;
 use App\Http\Controllers\image\UserImageController;
 use App\Http\Controllers\image_tag\OfficeImageRolesController;
+use App\Http\Controllers\image_tag\ProductImageRolesController;
 use App\Http\Controllers\image_tag\UserImageRolesController;
 use App\Http\Controllers\login\AppLoginsController;
 use App\Http\Controllers\login\LoginsController;
 use App\Http\Controllers\office_subscription\OfficeSubscriptionsController;
+use App\Http\Controllers\product\ProductsController;
 use App\Http\Controllers\role\RolesController;
 use App\Http\Controllers\role_subscription\RolesubscriptionsController;
 use App\Http\Controllers\user\UsersController;
+use App\Models\ProductDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +50,13 @@ Route::group(['middleware' => 'auth:sanctum'], function ()
     Route::get  ('/user/show',[UsersController::class,'show'])->name('api.user.show');
     Route::delete('/user', [UsersController::class,'destroy'])->name('api.user.destroy');
     Route::put('/user', [UsersController::class,'update'])->name('api.user.update');
+
+    //user address 
+    Route::get  ('/user-address',[UserAddressController::class,'index'])->name('api.user_address.index');
+    Route::post('/user-address', [UserAddressController::class,'store'])->name('api.user_address.store');
+    Route::get  ('/user-address/show',[UserAddressController::class,'show'])->name('api.user_address.show');
+    Route::delete('/user-address', [UserAddressController::class,'destroy'])->name('api.user_address.destroy');
+    Route::put('/user-address', [UserAddressController::class,'update'])->name('api.user_address.update');
 
     //roles 
     Route::get  ('/role',[RolesController::class,'index'])->name('api.role.index');
@@ -81,6 +96,13 @@ Route::group(['middleware' => 'auth:sanctum'], function ()
     Route::delete('/branch-office', [BranchOfficesController::class,'destroy'])->name('api.branch_office.destroy');
     Route::put('/branch-office', [BranchOfficesController::class,'update'])->name('api.branch_office.update');
 
+    //office address 
+    Route::get  ('/office-address',[OfficeAddressController::class,'index'])->name('api.office_address.index');
+    Route::post('/office-address', [OfficeAddressController::class,'store'])->name('api.office_address.store');
+    Route::get  ('/office-address/show',[OfficeAddressController::class,'show'])->name('api.office_address.show');
+    Route::delete('/office-address', [OfficeAddressController::class,'destroy'])->name('api.office_address.destroy');
+    Route::put('/office-address', [OfficeAddressController::class,'update'])->name('api.office_address.update');
+
     //branch office image role
     Route::get  ('/office-image-role',[OfficeImageRolesController::class,'index'])->name('api.office_image_role.index');
     Route::post('/office-image-role', [OfficeImageRolesController::class,'store'])->name('api.office_image_role.store');
@@ -115,6 +137,52 @@ Route::group(['middleware' => 'auth:sanctum'], function ()
     Route::get  ('/office-color/show',[OfficeColorController::class,'show'])->name('api.office_color.show');
     Route::delete('/office-color', [OfficeColorController::class,'destroy'])->name('api.office_color.destroy');
     Route::put('/office-color', [OfficeColorController::class,'update'])->name('api.office_color.update');
+
+    //product
+    Route::get  ('/product',[ProductsController::class,'index'])->name('api.product.index');
+    Route::post('/product', [ProductsController::class,'store'])->name('api.product.store');
+    Route::get  ('/product/show',[ProductsController::class,'show'])->name('api.product.show');
+    Route::delete('/product', [ProductsController::class,'destroy'])->name('api.product.destroy');
+    Route::put('/product', [ProductsController::class,'update'])->name('api.product.update');
+
+    //product category
+    Route::get  ('/product-detail',[ProductDetail::class,'index'])->name('api.product_detail.index');
+    Route::post('/product-detail', [ProductDetail::class,'store'])->name('api.product_detail.store');
+    Route::get  ('/product-detail/show',[ProductDetail::class,'show'])->name('api.product_detail.show');
+    Route::delete('/product-detail', [ProductDetail::class,'destroy'])->name('api.product_detail.destroy');
+    Route::put('/product-detail', [ProductDetail::class,'update'])->name('api.product_detail.update');
+
+    
+    //product image role
+    Route::get  ('/product-image-role',[ProductImageRolesController::class,'index'])->name('api.product_image_role.index');
+    Route::post('/product-image-role', [ProductImageRolesController::class,'store'])->name('api.product_image_role.store');
+    Route::get  ('/product-image-role/show',[ProductImageRolesController::class,'show'])->name('api.product_image_role.show');
+    Route::delete('/product-image-role', [ProductImageRolesController::class,'destroy'])->name('api.product_image_role.destroy');
+    Route::put('/product-image-role', [ProductImageRolesController::class,'update'])->name('api.product_image_role.update');
+
+    //product image 
+    Route::get  ('/product-image',[ProductImageController::class,'index'])->name('api.product_image.index');
+    Route::post('/product-image', [ProductImageController::class,'store'])->name('api.product_image.store');
+    Route::get  ('/product-image/show',[ProductImageController::class,'show'])->name('api.product_image.show');
+    Route::delete('/product-image', [ProductImageController::class,'destroy'])->name('api.product_image.destroy');
+    Route::put('/product-image', [ProductImageController::class,'update'])->name('api.product_image.update');   
+
+    
+    //product category
+    Route::get  ('/product-category',[CategoriesController::class,'index'])->name('api.product_category.index');
+    Route::post('/product-category', [CategoriesController::class,'store'])->name('api.product_category.store');
+    Route::get  ('/product-category/show',[CategoriesController::class,'show'])->name('api.product_category.show');
+    Route::delete('/product-category', [CategoriesController::class,'destroy'])->name('api.product_category.destroy');
+    Route::put('/product-category', [CategoriesController::class,'update'])->name('api.product_category.update');
+
+    //product category subscription
+    Route::get  ('/product-category-subscription',[CategorySubscriptionsController::class,'index'])->name('api.product_category_subscription.index');
+    Route::post('/product-category-subscription', [CategorySubscriptionsController::class,'store'])->name('api.product_category_subscription.store');
+    Route::get  ('/product-category-subscription/show',[CategorySubscriptionsController::class,'show'])->name('api.product_category_subscription.show');
+    Route::delete('/product-category-subscription', [CategorySubscriptionsController::class,'destroy'])->name('api.product_category_subscription.destroy');
+    Route::put('/product-category-subscription', [CategorySubscriptionsController::class,'update'])->name('api.product_category_subscription.update');
+
+
 
     //company
     Route::get  ('/company',[CompaniesController::class,'index'])->name('api.company.index');

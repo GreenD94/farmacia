@@ -28,6 +28,10 @@ class Product extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+    public function Categories()
+    {
+        return $this->morphToMany(Tag::class, 'taggable','tag_subscriptions')->withTimestamps();
+    }
     
 
 }

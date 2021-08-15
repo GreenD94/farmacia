@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\companies;
+namespace App\Http\Controllers\company;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\companies\StoreRequest;
@@ -41,7 +41,7 @@ class CompaniesController extends Controller
     {
 
             $model    =   Companies::whereId( $request->id);
-            $data=$request->except(['id']);
+            $data=$request->only('name');;
             $result=$model->update( $data);
             $model    = $model->first();
             return (!!$result)?$this->successResponse($model,'successful update'):$this->errorResponse($model,'failed to update', 401);
@@ -61,7 +61,7 @@ class CompaniesController extends Controller
     public function store(StoreRequest $request)
     {
                   
-            $data=$request->all();
+            $data=$request->only('name');
             $result=Companies::create($data);
             return (!!$result)?$this->successResponse($result,'successful store',201):$this->errorResponse($result,'failed to store', 401);
     }

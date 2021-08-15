@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Requests\currency;
+namespace App\Http\Requests\product;
 
-use App\Models\Image;
 use App\Models\TagSubscription;
 use App\Rules\ExistsPair;
 use App\Traits\Responser;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateRequest extends FormRequest
 {
@@ -33,9 +31,10 @@ class UpdateRequest extends FormRequest
     {
         return [
             'branch_office_id'=>  ['exists:branch_offices,id','numeric','gte:1'],
-            'tag_id'=>  [ new ExistsPair('tags','type','currency_set','id')],
-            'value'=>  [ 'numeric'],
-            'id'=>  ['required','exists:currencies,id','numeric','gte:1'],  
+            'product_detail_id'=>  ['exists:product_details,id','numeric','gte:1'],
+            'price'=>  [ 'numeric'],
+            'show_price'=>  [ 'boolean'],
+            'id'=>  ['required','exists:products,id','numeric','gte:1'],     
         ];
     }
     
